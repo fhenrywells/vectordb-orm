@@ -56,7 +56,7 @@ def test_floating_index(
             dim=128,
             index=index_cls(
                 metric_type=metric_type,
-                **INDEX_DEFAULTS.get(index_cls.index_type, {})
+                **INDEX_DEFAULTS.get(index_cls.__class__.__name__, {})
             )
         )
 
@@ -97,7 +97,7 @@ def test_binary_index(
             dim=128,
             index=index_cls(
                 metric_type=metric_type,
-                **INDEX_DEFAULTS.get(index_cls.index_type, {})
+                **INDEX_DEFAULTS.get(index_cls.__class__.__name__, {})
             )
         )
 

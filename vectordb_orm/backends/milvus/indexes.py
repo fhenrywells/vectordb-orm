@@ -11,7 +11,7 @@ class MilvusIndexBase(IndexBase):
     Individual docstrings for the index types are taken from this page of ideal scenarios.
 
     """
-    index_type: str
+
 
     def __init__(
         self,
@@ -59,12 +59,12 @@ class MilvusIndexBase(IndexBase):
         if inference_comparison is not None and not (inference_comparison >= 1 and inference_comparison <= cluster_units):
             raise ValueError("inference_comparison must be between 1 and cluster_units")
 
-class Milvus_FLAT(MilvusIndexBase):
+class FLAT(MilvusIndexBase):
     """
     - Relatively small dataset
     - Requires a 100% recall rate
     """
-    index_type = "FLAT"
+
 
     def get_index_parameters(self):
         return {}
@@ -73,12 +73,12 @@ class Milvus_FLAT(MilvusIndexBase):
         return {"metric_type": self.metric_type.name}
 
 
-class Milvus_IVF_FLAT(MilvusIndexBase):
+class IVF_FLAT(MilvusIndexBase):
     """
     - High-speed query
     - Requires a recall rate as high as possible
     """
-    index_type = "IVF_FLAT"
+
 
     def __init__(
         self,
@@ -105,13 +105,13 @@ class Milvus_IVF_FLAT(MilvusIndexBase):
         return {"nprobe": self.nprobe}
 
 
-class Milvus_IVF_SQ8(MilvusIndexBase):
+class IVF_SQ8(MilvusIndexBase):
     """
     - High-speed query
     - Limited memory resources
     - Accepts minor compromise in recall rate
     """
-    index_type = "IVF_SQ8"
+
 
     def __init__(
         self,
@@ -138,13 +138,13 @@ class Milvus_IVF_SQ8(MilvusIndexBase):
         return {"nprobe": self.nprobe}
 
 
-class Milvus_IVF_PQ(MilvusIndexBase):
+class IVF_PQ(MilvusIndexBase):
     """
     - Very high-speed query
     - Limited memory resources
     - Accepts substantial compromise in recall rate
     """
-    index_type = "IVF_PQ"
+
 
     def __init__(
         self,
@@ -179,13 +179,13 @@ class Milvus_IVF_PQ(MilvusIndexBase):
         if low_dimension_bits is not None and not (low_dimension_bits >= 1 and low_dimension_bits <= 16):
             raise ValueError("low_dimension_bits must be between 1 and 16")
 
-class Milvus_HNSW(MilvusIndexBase):
+class HNSW(MilvusIndexBase):
     """
     - High-speed query
     - Requires a recall rate as high as possible
     - Large memory resources
     """
-    index_type = "HNSW"
+
 
     def __init__(
         self,
@@ -229,12 +229,12 @@ class Milvus_HNSW(MilvusIndexBase):
             raise ValueError("search_scope must be between 1 and 32768")
 
 
-class Milvus_BIN_FLAT(MilvusIndexBase):
+class BIN_FLAT(MilvusIndexBase):
     """
     - Relatively small dataset
     - Requires a 100% recall rate
     """
-    index_type = "BIN_FLAT"
+
 
     def get_index_parameters(self):
         return {}
@@ -243,12 +243,12 @@ class Milvus_BIN_FLAT(MilvusIndexBase):
         return {"metric_type": self.metric_type.name}
 
 
-class Milvus_BIN_IVF_FLAT(MilvusIndexBase):
+class BIN_IVF_FLAT(MilvusIndexBase):
     """
     - High-speed query
     - Requires a recall rate as high as possible
     """
-    index_type = "BIN_IVF_FLAT"
+
 
     def __init__(
         self,
@@ -273,7 +273,3 @@ class Milvus_BIN_IVF_FLAT(MilvusIndexBase):
 
     def get_inference_parameters(self):
         return {"nprobe": self.nprobe, "metric_type": self.metric_type.name}
-
-
-FLOATING_INDEXES : set[MilvusIndexBase] = {Milvus_FLAT, Milvus_IVF_FLAT, Milvus_IVF_SQ8, Milvus_IVF_PQ, Milvus_HNSW}
-BINARY_INDEXES : set[MilvusIndexBase] = {Milvus_BIN_FLAT, Milvus_BIN_IVF_FLAT}

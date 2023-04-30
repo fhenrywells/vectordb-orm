@@ -49,7 +49,7 @@ class MilvusBackend(BackendBase):
         for attribute_name, field_configuration in schema._type_configuration.items():
             if isinstance(field_configuration, EmbeddingField):
                 index = {
-                    "index_type": field_configuration.index.index_type,
+                    "index_type": field_configuration.index.__class__.__name__,
                     "metric_type": field_configuration.index.metric_type.value,
                     "params": field_configuration.index.get_index_parameters(),
                 }
