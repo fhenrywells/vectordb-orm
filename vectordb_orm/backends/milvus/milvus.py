@@ -10,8 +10,8 @@ from pymilvus.orm.schema import CollectionSchema, FieldSchema
 
 from vectordb_orm.attributes import AttributeCompare, OperationType
 from vectordb_orm.backends.base import BackendBase
-from vectordb_orm.backends.milvus.indexes import (BINARY_INDEXES,
-                                                  FLOATING_INDEXES)
+from vectordb_orm.backends.milvus import (BINARY_INDEXES,
+                                          FLOATING_INDEXES)
 from vectordb_orm.base import VectorSchemaBase
 from vectordb_orm.fields import (BaseField, EmbeddingField, PrimaryKeyField,
                                  VarCharField)

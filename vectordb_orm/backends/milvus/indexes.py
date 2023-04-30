@@ -17,6 +17,7 @@ class MilvusIndexBase(IndexBase):
         self,
         metric_type: MilvusFloatSimilarityMetric | MilvusBinarySimilarityMetric | None = None,
     ):
+        from vectordb_orm.backends.milvus import FLOATING_INDEXES, BINARY_INDEXES
         # Choose a reasonable default if metric_type is null, depending on the type of index
         if metric_type is None:
             if isinstance(self, tuple(FLOATING_INDEXES)):
@@ -46,6 +47,7 @@ class MilvusIndexBase(IndexBase):
 
         """
         # Only support valid combinations of metric type and index
+        from vectordb_orm.backends.milvus import FLOATING_INDEXES, BINARY_INDEXES
         if isinstance(metric_type, MilvusFloatSimilarityMetric):
             if not isinstance(self, tuple(FLOATING_INDEXES)):
                 raise ValueError(f"Index type {self} is not supported for metric type {metric_type}")
